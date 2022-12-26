@@ -1,0 +1,81 @@
+{
+  "name": "@breadcrum/yt-dlp",
+  "version": "0.0.0",
+  "description": "Wrapper around yt-dlp with a few utilities for downloading the latest version",
+  "files": [
+    "*.js",
+    "lib/*.js"
+  ],
+  "type": "module",
+  "module": "index.js",
+  "exports": {
+    "import": "./index.js"
+  },
+  "scripts": {
+    "prepublishOnly": "git push --follow-tags && gh-releas -y",
+    "test": "run-s test:*",
+    "test-skip:standard": "standard",
+    "test:tap": "c8 tap --reporter specy --jobs 1 --no-timeout --no-bail --no-coverage --color",
+    "version": "run-s prepare version:*",
+    "version:changelog": "auto-changelog -p --template keepachangelog auto-changelog --breaking-pattern 'BREAKING CHANGE:'",
+    "version:git": "git add CHANGELOG.md"
+  },
+  "author": "Bret Comnes <bcomnes@gmail.com> (https://bret.io)",
+  "bugs": {
+    "url": "https://github.com/hifiwi-fi/bc-dlp/issues"
+  },
+  "homepage": "https://github.com/hifiwi-fi/bc-dlp",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hifiwi-fi/bc-dlp.git"
+  },
+  "keywords": [
+    "youtube-dl",
+    "youtube-dl-wrapper",
+    "youtube-downloader",
+    "nodejs",
+    "yt-dlp",
+    "yt-dlp-wrapper"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "auto-changelog": "^2.0.0",
+    "gh-release": "^7.0.0",
+    "npm-run-all2": "^6.0.0",
+    "standard": "^17.0.0",
+    "tap": "^16.3.2",
+    "c8": "^7.10.0"
+  },
+  "dependencies": {
+    "octokit": "^2.0.10",
+    "p-temporary-directory": "^1.1.1",
+    "undici": "^5.14.0",
+    "webassert": "^3.0.2"
+  },
+  "funding": {
+    "type": "individual",
+    "url": "https://github.com/sponsors/bcomnes"
+  },
+  "c8": {
+    "reporter": [
+      "lcov",
+      "text"
+    ],
+    "all": true,
+    "exclude": [
+      "examples/*",
+      "test-cases/*",
+      "coverage/**",
+      "packages/*/test{,s}/**",
+      "**/*.d.ts",
+      "test{,s}/**",
+      "test{,-*}.{js,cjs,mjs,ts,tsx,jsx}",
+      "**/*{.,-}test.{js,cjs,mjs,ts,tsx,jsx}",
+      "**/__tests__/**",
+      "**/{ava,babel,nyc}.config.{js,cjs,mjs}",
+      "**/jest.config.{js,cjs,mjs,ts}",
+      "**/{karma,rollup,webpack}.config.js",
+      "**/.{eslint,mocha}rc.{js,cjs}"
+    ]
+  }
+}
