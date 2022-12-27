@@ -44,23 +44,23 @@ export class BcDLP {
 
     const execEventEmitter = new EventEmitter()
 
-    const ytDlpProcess = spawn(this.binPath, ytDlpArguments, options)
-    execEventEmitter.ytDlpProcess = ytDlpProcess
+    const child = spawn(this.binPath, ytDlpArguments, options)
+    execEventEmitter.child = child
 
     let stderrData = ''
     let processError
 
-    ytDlpProcess.stdout.on('data', (data) => emitYouTubeDLEvents({
+    child.stdout.on('data', (data) => emitYouTubeDLEvents({
       stringData: data.toString(),
       emitter: execEventEmitter
     }))
 
-    ytDlpProcess.stderr.on('data', (data) => (stderrData += data.toString()))
+    child.stderr.on('data', (data) => (stderrData += data.toString()))
 
-    ytDlpProcess.on('error', (error) => (processError = error))
+    child.on('error', (error) => (processError = error))
 
-    ytDlpProcess.on('close', (code) => {
-      if (code === 0 || ytDlpProcess.killed) {
+    child.on('close', (code) => {
+      if (code === 0 || child.killed) {
         execEventEmitter.emit('close', code)
       } else {
         execEventEmitter.emit('error', createError({ code, processError, stderrData }))
@@ -104,13 +104,13 @@ export class BcDLP {
     const { binPath } = this
     ytDlpArguments = ytDlpArguments.concat(['-o', '-'])
     const execEventEmitter = new EventEmitter()
-    const ytDlpProcess = spawn(binPath, ytDlpArguments, options)
-    execEventEmitter.ytDlpProcess = ytDlpProcess
+    const child = spawn(binPath, ytDlpArguments, options)
+    execEventEmitter.child = child
 
     let stderrData = ''
     let processError
 
-    ytDlpProcess.stderr.on('data', (data) => {
+    child.stderr.on('data', (data) => {
       const stringData = data.toString()
 
       emitYouTubeDLEvents({
@@ -119,17 +119,17 @@ export class BcDLP {
       })
       stderrData += stringData
     })
-    ytDlpProcess.on('error', (error) => (processError = error))
+    child.on('error', (error) => (processError = error))
 
-    ytDlpProcess.on('close', (code) => {
-      if (code === 0 || ytDlpProcess.killed) {
+    child.on('close', (code) => {
+      if (code === 0 || child.killed) {
         execEventEmitter.emit('close', code)
       } else {
         execEventEmitter.emit('error', createError({ code, processError, stderrData }))
       }
     })
     return {
-      readStream: ytDlpProcess.stdout,
+      readStream: child.stdout,
       execEventEmitter
     }
   }

@@ -12,11 +12,11 @@
     "import": "./index.js"
   },
   "scripts": {
-    "prepublishOnly": "git push --follow-tags && gh-releas -y",
+    "prepublishOnly": "git push --follow-tags && gh-release -y",
     "test": "run-s test:*",
     "test-skip:standard": "standard",
     "test:tap": "c8 tap --reporter specy --jobs 1 --no-timeout --no-bail --no-coverage --color",
-    "version": "run-s prepare version:*",
+    "version": "run-s version:*",
     "version:changelog": "auto-changelog -p --template keepachangelog auto-changelog --breaking-pattern 'BREAKING CHANGE:'",
     "version:git": "git add CHANGELOG.md"
   },

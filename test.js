@@ -94,7 +94,7 @@ tap.test('abort event emitter download', { timeout: 0 }, async t => {
   const controller = new AbortController()
   const bcDLPEventEmitter = bcDLP.exec([testVideoURL, '-f', 'worst', '-o', testVideoPath], { signal: controller.signal })
   controller.abort()
-  t.ok(bcDLPEventEmitter.ytDlpProcess?.killed, 'process is aborted')
+  t.ok(bcDLPEventEmitter.child?.killed, 'process is aborted')
 })
 
 tap.test('abort stream download', { timeout: 0 }, async t => {
@@ -107,7 +107,7 @@ tap.test('abort stream download', { timeout: 0 }, async t => {
   const controller = new AbortController()
   const { execEventEmitter } = bcDLP.execStream([testVideoURL, '-f', 'worst', '-o', testVideoPath], { signal: controller.signal })
   controller.abort()
-  t.ok(execEventEmitter.ytDlpProcess?.killed, 'process is aborted')
+  t.ok(execEventEmitter.child?.killed, 'process is aborted')
 })
 
 tap.todo('abort promise download', { timeout: 0 }, async t => {
@@ -115,14 +115,14 @@ tap.todo('abort promise download', { timeout: 0 }, async t => {
   const dir = t.testdir()
   const testVideoPath = join(dir, 'testVideo.mp4')
 
-  const bcDLP = new BcDLP(results)
+  const bcDLP = new BcDLP('yt-dlp')
   t.ok(bcDLP, 'instance created')
 
   const controller = new AbortController()
   const execPromise = bcDLP.execPromise([testVideoURL, '-f', 'worst', '-o', testVideoPath], { signal: controller.signal })
 
   controller.abort()
-  t.ok(execPromise.ytDlpProcess?.killed, 'process is aborted')
+  t.ok(execPromise.child?.killed, 'process is aborted')
 })
 
 tap.test('video Info should have title Big Buck Bunny 60fps 4K - Official Blender Foundation Short Film', async (t) => {
