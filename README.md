@@ -1,6 +1,6 @@
 # bc-dlp
 [![Actions Status](https://github.com/hifiwi-fi/bc-dlp/workflows/tests/badge.svg)](https://github.com/hifiwi-fi/bc-dlp/actions)
-[![Coverage Status](https://coveralls.io/repos/github/hifiwi-fi/bc-dlp/badge.svg?branch=master)](https://coveralls.io/github/bcomnes/siteup?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/hifiwi-fi/bc-dlp/badge.svg?branch=master)](https://coveralls.io/github/hifiwi-fi/bc-dlp?branch=master)
 
 A yt-dlp wrapper with a few utilities for downloading the latest release.
 
