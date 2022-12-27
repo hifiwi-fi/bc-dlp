@@ -1,15 +1,18 @@
 import { EventEmitter } from 'events'
 import {
-  execFile,
+  execFile as execFileCb,
   spawn
 } from 'child_process'
 import assert from 'webassert'
+import { promisify } from 'util'
 
 import { defaultOptions } from './lib/default-options.js'
 import { emitYouTubeDLEvents } from './lib/youtube-dl-events.js'
 import { createError } from './lib/create-error.js'
 
 export { downloadFromGithub } from './lib/download-yt-dlp.js'
+
+const execFile = promisify(execFileCb)
 
 const executableName = 'yt-dlp'
 
@@ -67,35 +70,27 @@ export class BcDLP {
     return execEventEmitter
   }
 
-  execPromise (
+  async execPromise (
     ytDlpArguments = [],
     options = {}
   ) {
     const { binPath } = this
-    let ytDlpProcess
-    const ytDlpPromise = new Promise(
-      (resolve, reject) => {
-        options = {
-          ...defaultOptions(),
-          ...options
-        }
-        ytDlpProcess = execFile(
-          binPath,
-          ytDlpArguments,
-          options,
-          (error, stdout, stderr) => {
-            if (error) {
-              reject(createError({ code: error, stderrData: stderr }))
-            } else {
-              resolve(stdout)
-            }
-          }
-        )
-      }
-    )
 
-    ytDlpPromise.ytDlpProcess = ytDlpProcess
-    return ytDlpPromise
+    options = {
+      ...defaultOptions(),
+      ...options
+    }
+
+    try {
+      const { stdout } = await execFile(
+        binPath,
+        ytDlpArguments,
+        options
+      )
+      return stdout
+    } catch (err) {
+      throw createError({ code: err, stderrData: err.stderr })
+    }
   }
 
   execStream (
