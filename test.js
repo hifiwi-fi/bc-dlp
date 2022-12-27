@@ -16,6 +16,11 @@ const token = process?.env?.GITHUB_TOKEN
 const [tmpdir, cleanup] = await tmp()
 let results
 
+tap.teardown(async () => {
+  await cleanup()
+  console.log('cleaned up folder')
+})
+
 tap.test('download a bin', async t => {
   const octokitOpts = token ? { auth: token } : null
   results = await downloadFromGithub({
@@ -25,7 +30,7 @@ tap.test('download a bin', async t => {
   t.ok(results, 'downloaded')
 })
 
-tap.test('download video with promise', { timeout: 0 }, async t => {
+tap.test('download video with promise', async t => {
   const dir = t.testdir()
   const testVideoPath = join(dir, 'testVideo.mp4')
 
@@ -49,7 +54,7 @@ tap.test('download video with promise', { timeout: 0 }, async t => {
   await unlink(testVideoPath)
 })
 
-tap.test('download video with event emitter', { timeout: 0 }, async t => {
+tap.test('download video with event emitter', async t => {
   const dir = t.testdir()
   const testVideoPath = join(dir, 'testVideo.mp4')
 
@@ -67,7 +72,7 @@ tap.test('download video with event emitter', { timeout: 0 }, async t => {
   await checkEventEmitter({ t, bcDLPEventEmitter, testVideoPath })
 })
 
-tap.test('download video with readable stream', { timeout: 0 }, async t => {
+tap.test('download video with readable stream', async t => {
   const dir = t.testdir()
   const testVideoPath = join(dir, 'testVideo.mp4')
 
@@ -84,7 +89,7 @@ tap.test('download video with readable stream', { timeout: 0 }, async t => {
   await checkReadableStream({ t, bcDLPStream: readStream, execEventEmitter, testVideoPath, pipe })
 })
 
-tap.test('abort event emitter download', { timeout: 0 }, async t => {
+tap.test('abort event emitter download', async t => {
   const dir = t.testdir()
   const testVideoPath = join(dir, 'testVideo.mp4')
 
@@ -97,7 +102,7 @@ tap.test('abort event emitter download', { timeout: 0 }, async t => {
   t.ok(bcDLPEventEmitter.child?.killed, 'process is aborted')
 })
 
-tap.test('abort stream download', { timeout: 0 }, async t => {
+tap.test('abort stream download', async t => {
   const dir = t.testdir()
   const testVideoPath = join(dir, 'testVideo.mp4')
 
@@ -110,7 +115,7 @@ tap.test('abort stream download', { timeout: 0 }, async t => {
   t.ok(execEventEmitter.child?.killed, 'process is aborted')
 })
 
-tap.todo('abort promise download', { timeout: 0 }, async t => {
+tap.todo('abort promise download', async t => {
   // This test crashes when aborting yt-dlp for some reason.
   const dir = t.testdir()
   const testVideoPath = join(dir, 'testVideo.mp4')
@@ -172,11 +177,6 @@ tap.test('extractor description list should include YouTube.com playlists', asyn
 
   t.ok(Array.isArray(extractorList), 'Extractor descriptions is array')
   t.ok(extractorList.includes('youtube:playlist: YouTube playlists'), 'extractor descriptions includes youtube playlists')
-})
-
-tap.test('cleanup', async t => {
-  await cleanup()
-  t.ok(true, 'cleaned up')
 })
 
 async function checkEventEmitter ({ t, bcDLPEventEmitter, testVideoPath }) {
@@ -241,7 +241,6 @@ async function checkReadableStream ({ t, bcDLPStream, execEventEmitter, testVide
   const waiter = new Promise((resolve, reject) => { waiterResolve = resolve })
 
   bcDLPStream.on('close', async () => {
-    console.log('closing')
     const stats = await stat(testVideoPath)
     t.ok(stats, 'video exists')
     t.equal(stats.size, expectedVideoSize)
