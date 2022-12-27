@@ -11,12 +11,16 @@ const testVideoId = 'C0DPdy98e4c'
 const testVideoURL = 'https://www.youtube.com/watch?v=' + testVideoId
 const expectedVideoSize = 169043
 
+const token = process?.env?.GITHUB_TOKEN
+
 const [tmpdir, cleanup] = await tmp()
 let results
 
 tap.test('download a bin', async t => {
+  const octokitOpts = token ? { auth: token } : null
   results = await downloadFromGithub({
-    filepath: join(tmpdir, 'yt-dlp')
+    filepath: join(tmpdir, 'yt-dlp'),
+    octokitOpts
   })
   t.ok(results, 'downloaded')
 })

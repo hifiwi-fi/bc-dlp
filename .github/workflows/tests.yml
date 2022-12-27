@@ -23,6 +23,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm i
     - run: npm test --color=always
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   
   automerge:
     needs: test
