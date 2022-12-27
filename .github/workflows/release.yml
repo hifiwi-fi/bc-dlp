@@ -28,6 +28,8 @@ jobs:
     - run: npm i
     - run: npm test
     - run: git reset --hard && git clean -fd
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # for api access rate limiting
     - name: npm version && npm test
       uses: bcomnes/npm-bump@v2
       with:
