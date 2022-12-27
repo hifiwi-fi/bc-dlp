@@ -24,7 +24,12 @@ jobs:
     - run: npm i
     - run: npm test --color=always
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # for api access rate limiting
+    - name: Coveralls
+        uses: coverallsapp/github-action@1.1.3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
   
   automerge:
     needs: test
