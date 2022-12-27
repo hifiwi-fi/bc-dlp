@@ -117,6 +117,8 @@ setTimeout(() => {
 }, 500)
 ```
 
+**Note:** This fails crashes V8 with `bcDLP.execPromise` for some reason. 
+
 ### Metadata
 
 Returns the yt-dlp `--dump-json` metadata as an object.
