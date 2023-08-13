@@ -69,7 +69,7 @@ import { BcDLP } from 'bc-dlp'
 import * as fs from 'fs'
 const bcDLP = new BcDLP('yt-dlp')
 
-const { readableStream, execEventEmitter } = bcDLP.execStream([
+const { readStream, execEventEmitter } = bcDLP.execStream([
   'https://www.youtube.com/watch?v=aqz-KE-bpKQ',
   '-f',
   'best[ext=mp4]'
