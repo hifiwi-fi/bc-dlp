@@ -31,7 +31,7 @@ The log message `[download] Destination: output.mp4` will emit the event type `d
 `eventEmitter.child` exposes the spawned yt-dlp process.
 
 ```js
-import BcDLP from 'bc-dlp'
+import { BcDLP } from 'bc-dlp'
 const bcDLP = new BcDLP('yt-dlp') // If its in your process path
 
 const eventEmitter = bcDLP
@@ -65,11 +65,11 @@ Excecute yt-dlp and returns an [Readable Stream](https://nodejs.org/api/stream.h
 The interface works just like the [EventEmitter](#EventEmitter).
 
 ```javascript
-import BcDLP from 'bc-dlp'
+import { BcDLP } from 'bc-dlp'
 import * as fs from 'fs'
 const bcDLP = new BcDLP('yt-dlp')
 
-const { readableStream, execEventEmitter } = bcDLP.execStream([
+const { readStream, execEventEmitter } = bcDLP.execStream([
   'https://www.youtube.com/watch?v=aqz-KE-bpKQ',
   '-f',
   'best[ext=mp4]'
