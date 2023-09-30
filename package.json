@@ -15,7 +15,7 @@
     "prepublishOnly": "git push --follow-tags && gh-release -y",
     "test": "run-s test:*",
     "test-skip:standard": "standard",
-    "test:tap": "c8 tap --jobs-auto --reporter specy --no-bail --no-coverage --color --timeout 1200000",
+    "test:tap": "tap",
     "version": "run-s version:*",
     "version:changelog": "auto-changelog -p --template keepachangelog auto-changelog --breaking-pattern 'BREAKING CHANGE:'",
     "version:git": "git add CHANGELOG.md"
@@ -43,8 +43,7 @@
     "gh-release": "^7.0.0",
     "npm-run-all2": "^6.0.0",
     "standard": "^17.0.0",
-    "tap": "^16.3.2",
-    "c8": "^8.0.0",
+    "tap": "^18.4.0",
     "p-temporary-directory": "^2.0.1"
   },
   "dependencies": {
@@ -56,26 +55,14 @@
     "type": "individual",
     "url": "https://github.com/sponsors/bcomnes"
   },
-  "c8": {
-    "reporter": [
-      "lcov",
-      "text"
-    ],
-    "all": true,
-    "exclude": [
-      "examples/*",
-      "test-cases/*",
-      "coverage/**",
-      "packages/*/test{,s}/**",
-      "**/*.d.ts",
-      "test{,s}/**",
-      "test{,-*}.{js,cjs,mjs,ts,tsx,jsx}",
-      "**/*{.,-}test.{js,cjs,mjs,ts,tsx,jsx}",
-      "**/__tests__/**",
-      "**/{ava,babel,nyc}.config.{js,cjs,mjs}",
-      "**/jest.config.{js,cjs,mjs,ts}",
-      "**/{karma,rollup,webpack}.config.js",
-      "**/.{eslint,mocha}rc.{js,cjs}"
+  "tap": {
+    "serial": [],
+    "typecheck": false,
+    "allow-incomplete-coverage": true,
+    "timeout": 1200000,
+    "coverage-report": [
+      "text",
+      "lcovonly"
     ]
   },
   "engines": {
