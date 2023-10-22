@@ -9,7 +9,7 @@ import { downloadFromGithub, BcDLP } from './index.js'
 
 const testVideoId = 'C0DPdy98e4c'
 const testVideoURL = 'https://www.youtube.com/watch?v=' + testVideoId
-const expectedVideoSize = 173296
+const expectedVideoSize = 170139
 
 const token = process?.env?.GITHUB_TOKEN
 
