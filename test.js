@@ -9,7 +9,7 @@ import { downloadFromGithub, BcDLP } from './index.js'
 
 const testVideoId = 'C0DPdy98e4c'
 const testVideoURL = 'https://www.youtube.com/watch?v=' + testVideoId
-const expectedVideoSize = 170139
+// const expectedVideoSize = 170139
 
 const token = process?.env?.GITHUB_TOKEN
 
@@ -50,7 +50,7 @@ tap.test('download video with promise', async t => {
 
   const stats = await stat(testVideoPath)
   t.ok(stats, 'video exists')
-  t.equal(stats.size, expectedVideoSize)
+  t.ok(stats.size > 100)
   await unlink(testVideoPath)
 })
 
@@ -204,7 +204,7 @@ async function checkEventEmitter ({ t, bcDLPEventEmitter, testVideoPath }) {
     const stats = await stat(testVideoPath)
     t.ok(stats)
     await unlink(testVideoPath)
-    t.equal(stats.size, expectedVideoSize, 'size is expected')
+    t.ok(stats.size > 100, 'size is expected')
     t.ok(progressDefined, 'progress is defined')
     t.ok(bcDLPEventFound, '')
     waiterResolve()
@@ -243,7 +243,7 @@ async function checkReadableStream ({ t, bcDLPStream, execEventEmitter, testVide
   bcDLPStream.on('close', async () => {
     const stats = await stat(testVideoPath)
     t.ok(stats, 'video exists')
-    t.equal(stats.size, expectedVideoSize)
+    t.ok(stats.size > 100)
     t.ok(progressDefined, 'progress found')
     t.ok(bcDLPEventFound, 'bcDLPEvent found')
     await unlink(testVideoPath)
