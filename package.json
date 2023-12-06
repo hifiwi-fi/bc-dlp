@@ -48,7 +48,7 @@
   },
   "dependencies": {
     "octokit": "^3.0.0",
-    "undici": "^5.14.0",
+    "undici": "^6.0.1",
     "webassert": "^3.0.2"
   },
   "funding": {
