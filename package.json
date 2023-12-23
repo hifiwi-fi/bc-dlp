@@ -1,6 +1,6 @@
 {
   "name": "bc-dlp",
-  "version": "1.0.4",
+  "version": "2.0.0",
   "description": "Wrapper around yt-dlp with a few utilities for downloading the latest version for breadcrum.net",
   "files": [
     "*.js",
