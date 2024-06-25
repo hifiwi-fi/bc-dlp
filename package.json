@@ -43,7 +43,7 @@
     "gh-release": "^7.0.0",
     "npm-run-all2": "^6.0.0",
     "standard": "^17.0.0",
-    "tap": "^19.0.0",
+    "tap": "^20.0.0",
     "p-temporary-directory": "^2.0.1"
   },
   "dependencies": {
