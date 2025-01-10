@@ -47,7 +47,7 @@
     "p-temporary-directory": "^2.0.1"
   },
   "dependencies": {
-    "octokit": "^3.0.0",
+    "octokit": "^4.1.0",
     "undici": "^7.0.0",
     "webassert": "^3.0.2"
   },
